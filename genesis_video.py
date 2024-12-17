@@ -1,12 +1,15 @@
-import openai
-import requests
 import os
+import requests
+from openai import OpenAI
 from gtts import gTTS
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
-from pydub import AudioSegment
+from dotenv import load_dotenv
 
-# Configuraciones iniciales
-openai.api_key = "***REMOVED***"  # Reemplaza con tu clave de OpenAI
+# Cargar variables de entorno
+load_dotenv()
+
+# Configurar OpenAI Client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 TEXT = """
 En el principio creó Dios los cielos y la tierra. Y la tierra estaba desordenada y vacía, 
@@ -19,16 +22,17 @@ OUTPUT_VIDEO = os.path.join(OUTPUT_DIR, "genesis_video.mp4")
 TEMP_DIR = "temp_files"
 
 # Crear carpetas temporales y de salida
-if not os.path.exists(TEMP_DIR):
-    os.makedirs(TEMP_DIR)
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
+os.makedirs(TEMP_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Instanciar el cliente OpenAI
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_keywords_from_text(text):
     """Genera palabras clave relevantes usando la API de OpenAI ChatCompletion."""
     print("Generando palabras clave con OpenAI...")
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Usa 'gpt-4' si tienes acceso, de lo contrario usa 'gpt-3.5-turbo'
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Eres un asistente que genera palabras clave visuales relevantes."},
             {"role": "user", "content": f"Extrae palabras clave visuales descriptivas del siguiente texto:\n{text}"}
@@ -36,24 +40,21 @@ def generate_keywords_from_text(text):
         max_tokens=50,
         temperature=0.5
     )
-    # Acceder a la respuesta generada
     content = response.choices[0].message.content
     keywords = content.strip().split("\n")
     return [kw.strip() for kw in keywords if kw.strip()]
-
-
 
 def generate_images_with_openai(keywords):
     """Genera imágenes usando DALL·E a partir de palabras clave."""
     print("Generando imágenes con OpenAI DALL·E...")
     image_paths = []
     for idx, keyword in enumerate(keywords):
-        response = openai.Image.create(
+        response = client.images.generate(
             prompt=keyword,
             n=1,
             size="1024x1024"
         )
-        image_url = response['data'][0]['url']
+        image_url = response.data[0].url
         image_path = os.path.join(TEMP_DIR, f"image_{idx}.jpg")
         with open(image_path, "wb") as img:
             img.write(requests.get(image_url).content)

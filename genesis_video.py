@@ -4,6 +4,7 @@ from openai import OpenAI
 from gtts import gTTS
 from moviepy.editor import ImageClip, TextClip, CompositeVideoClip, concatenate_videoclips, AudioFileClip
 from dotenv import load_dotenv
+from textwrap import wrap
 
 
 load_dotenv()
@@ -41,14 +42,30 @@ def generate_prompts_from_text(sentences):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Genera descripciones visuales detalladas de escenas basadas en texto biblico. Las imágenes deben representar solo paisajes o elementos de la naturaleza, como cielos, montañas, ríos o árboles. Evita cualquier mención de personas, figuras religiosas, animales o elementos controvertidos."},
+                {"role": "system", "content": (
+                    "Eres un generador de descripciones visuales detalladas para paisajes inspirados en textos bíblicos. "
+                    "Las descripciones deben enfocarse exclusivamente en paisajes naturales majestuosos y serenos. "
+                    "Incorpora elementos como: montañas, cielos, ríos, árboles, bosques, barrancos, praderas y cuerpos de agua. "
+                    "Describe detalles como colores específicos (dorado, verde, azul claro), texturas (rocosa, suave, reflejante), "
+                    "juegos de luces (amanecer, atardecer, luz de luna) y atmósferas (calma, majestuosidad, misterio). "
+                    "Evita completamente menciones de personas, animales, figuras religiosas o construcciones humanas. "
+                    "Crea descripciones vivas y visuales que sirvan como referencia para ilustraciones."
+                )},
                 {"role": "user", "content": f"Describe un paisaje visual basado en la siguiente oración:\n{cleaned_sentence}"}
             ],
-            max_tokens=100,
+            max_tokens=150,
             temperature=0.5
         )
-        prompt = response.choices[0].message.content.strip()
-        final_prompt = f"{prompt}. La imagen debe representar únicamente un paisaje natural con elementos como montañas, cielos o ríos. No debe incluir personas, animales ni figuras religiosas."
+        if response.choices and response.choices[0].message:
+            prompt = response.choices[0].message.content.strip()
+        else:
+            raise ValueError("La respuesta de OpenAI no contiene un mensaje válido.")
+        final_prompt = (
+            f"{prompt}. "
+            "Asegúrate de que la imagen represente únicamente un paisaje natural con detalles visuales nítidos, "
+            "como cielos despejados, montañas con sombras suaves, cuerpos de agua reflejantes o praderas verdes. "
+            "No debe incluir personas, animales ni construcciones humanas."
+        )
         print(f"Prompt generado: {final_prompt}")
         prompts.append(final_prompt)
     return prompts
@@ -99,49 +116,53 @@ def split_sentence_into_chunks(sentence, chunk_size=4):
         chunks.append(chunk)
     return chunks
 
-def create_video_with_audio(images, sentences, audio_path, output_path):
+def create_video_with_audio(images, sentences, output_path):
     """
-    Crea un video combinando imágenes y audio con subtítulos, transiciones y zoom.
-    Cada oración se divide en trozos más pequeños de ~4 palabras para subtítulos más legibles.
+    Genera un video combinando imágenes y audios individuales con subtítulos sincronizados.
+    Ajusta los subtítulos dividiéndolos en múltiples líneas si son demasiado largos.
     """
-    print("Creando video con subtítulos, transiciones y zoom...")
-    audio = AudioFileClip(audio_path)
-    total_duration = audio.duration
+    print("Creando audios individuales y video...")
+    audio_clips = []
+    video_clips = []
 
-    # Distribute time proportionally according to the number of sentences
-    duration_per_sentence = total_duration / len(sentences)
-
-    clips = []
+    # Generar un audio por cada oración
     for idx, (image, sentence) in enumerate(zip(images, sentences)):
-        # Split sentence into chunks of 4 words
-        chunks = split_sentence_into_chunks(sentence, chunk_size=4)
-        chunk_count = len(chunks)
+        audio_path = os.path.join(TEMP_DIR, f"audio_{idx}.mp3")
         
-        # Each chunk gets an equal slice of the sentence duration
-        chunk_duration = duration_per_sentence / chunk_count
+        # Crear el audio con gTTS
+        tts = gTTS(sentence, lang="es")
+        tts.save(audio_path)
+        print(f"Audio generado: {audio_path}")
 
-        # Create base image clip for the sentence duration
-        base_clip = ImageClip(image, duration=duration_per_sentence)
-        base_clip = base_clip.resize(height=720).crop(x1=10, y1=10, x2=base_clip.w-10, y2=base_clip.h-10).resize(height=720)
+        # Cargar el audio generado
+        audio_clip = AudioFileClip(audio_path)
+        audio_clips.append(audio_clip)
 
-        # Create dynamically-timed subtitles over the base clip
-        subtitles = []
-        current_start = 0
-        for chunk in chunks:
-            subtitle = TextClip(chunk, fontsize=40, color='white', bg_color='black', 
-                                size=(base_clip.w, 100), method='caption')
-            subtitle = subtitle.set_duration(chunk_duration).set_position(('center', 'bottom')).set_start(current_start)
-            subtitles.append(subtitle)
-            current_start += chunk_duration
+        # Crear imagen clip con duración igual a la del audio
+        image_clip = ImageClip(image, duration=audio_clip.duration)
+        image_clip = image_clip.resize(height=720).crop(x1=10, y1=10, x2=image_clip.w-10, y2=image_clip.h-10)
 
-        # Combine base image with all subtitle chunks
-        video_with_subtitles = CompositeVideoClip([base_clip] + subtitles)
-        clips.append(video_with_subtitles)
+        # Dividir el subtítulo en líneas de ~50 caracteres (ajustable)
+        max_chars_per_line = 50
+        wrapped_text = "\n".join(wrap(sentence, width=max_chars_per_line))
 
-    # Concatenate all sentence clips with a slight crossfade
-    video = concatenate_videoclips(clips, method="compose", padding=-1, bg_color=(0, 0, 0))
-    video = video.set_audio(audio)
-    video.write_videofile(output_path, fps=24, threads=4)
+        # Ajustar el tamaño de la fuente dinámicamente si el texto es muy largo
+        font_size = 40 if len(sentence) < 100 else 30
+
+        # Agregar subtítulos sincronizados
+        subtitle = TextClip(wrapped_text, fontsize=font_size, color='white', bg_color='black',
+                            size=(image_clip.w, None), method='caption')
+        subtitle = subtitle.set_duration(audio_clip.duration).set_position(('center', 'bottom'))
+
+        # Combinar imagen y subtítulos
+        video_with_subtitles = CompositeVideoClip([image_clip, subtitle])
+        video_with_subtitles = video_with_subtitles.set_audio(audio_clip)
+
+        video_clips.append(video_with_subtitles)
+
+    # Unir todos los clips en un solo video
+    final_video = concatenate_videoclips(video_clips, method="compose")
+    final_video.write_videofile(output_path, fps=24, threads=4)
 
 
 def main():
@@ -169,12 +190,8 @@ def main():
         print(f"Prompts generados: {prompts}")
         images = generate_images_with_openai(prompts)
 
-    # Generar voz desde el texto
-    audio_path = os.path.join(TEMP_DIR, "voice.mp3")
-    text_to_speech(TEXT, audio_path)
-
     # Crear video
-    create_video_with_audio(images, sentences, audio_path, OUTPUT_VIDEO)
+    create_video_with_audio(images, sentences, OUTPUT_VIDEO)
     print(f"Video creado exitosamente: {OUTPUT_VIDEO}")
 
 if __name__ == "__main__":

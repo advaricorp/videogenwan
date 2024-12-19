@@ -1,198 +1,158 @@
 import os
+import re
+import asyncio
+import logging
 import requests
-from openai import OpenAI
-from gtts import gTTS
-from moviepy.editor import ImageClip, TextClip, CompositeVideoClip, concatenate_videoclips, AudioFileClip
-from dotenv import load_dotenv
 from textwrap import wrap
+from uuid import uuid4
+from edge_tts import Communicate
+from PIL import Image, ImageDraw, ImageFont
+from moviepy.editor import (
+    TextClip, ImageClip, AudioFileClip, CompositeVideoClip, concatenate_videoclips
+)
 
+# Configuración de logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-load_dotenv()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
+# Configuraciones globales
 OUTPUT_DIR = "output"
-OUTPUT_VIDEO = os.path.join(OUTPUT_DIR, "genesis_video.mp4")
 TEMP_DIR = "temp_files"
+AUDIO_DIR = os.path.join(OUTPUT_DIR, "audio")
+IMAGE_DIR = os.path.join(OUTPUT_DIR, "images")
+OUTPUT_VIDEO_PATH = os.path.join(OUTPUT_DIR, "final_video.mp4")
 
-os.makedirs(TEMP_DIR, exist_ok=True)
+MAX_TOKENS_SD = 75
+MAX_CHARS_PROMPT = 200
+MAX_CHARS_SUBTITLE = 50
+NEGATIVE_PROMPT = "realistic human, cartoon, anime, low quality, blurry, text, watermark"
+FPS = 24
+
+# Crear carpetas necesarias
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(TEMP_DIR, exist_ok=True)
+os.makedirs(AUDIO_DIR, exist_ok=True)
+os.makedirs(IMAGE_DIR, exist_ok=True)
+
+def generate_random_name(extension="jpg"):
+    return f"{uuid4().hex}.{extension}"
 
 def split_text_into_sentences(text):
-    """Divide el texto en oraciones basadas en saltos de línea o puntos."""
-    sentences = [s.strip() for s in text.replace("\n", ". ").split(".") if s.strip()]
+    # Dividir por puntos seguidos de espacio y mayúscula
+    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', text.strip())
+    # Limpiar espacios y filtrar líneas vacías
+    sentences = [s.strip() for s in sentences if s.strip()]
+    logging.info(f"Número de oraciones detectadas: {len(sentences)}")
+    for i, s in enumerate(sentences):
+        logging.info(f"Oración {i+1}: {s[:100]}...")  # Mostrar primeros 100 caracteres
     return sentences
 
-def clean_sentence(sentence):
-    """Filtra palabras sensibles que podrían activar el filtro de contenido."""
-    forbidden_words = ["Dios", "abismo", "religiosas", "espíritu"]
-    for word in forbidden_words:
-        sentence = sentence.replace(word, "paisaje")
-    return sentence
+def clean_and_trim_sentence(sentence, max_tokens):
+    if len(sentence.split()) > max_tokens:
+        sentence = " ".join(sentence.split()[:max_tokens])
+    return sentence.strip()
 
 def generate_prompts_from_text(sentences):
-    """Genera prompts usando OpenAI GPT-3.5 a partir de oraciones."""
-    print("Generando prompts con OpenAI...")
+    logging.info("Generando prompts...")
     prompts = []
-    for sentence in sentences:
-        # Clean the sentence to remove forbidden words
-        cleaned_sentence = clean_sentence(sentence)
-        
-        # Generate the prompt
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": (
-                    "Eres un generador de descripciones visuales detalladas para paisajes inspirados en textos bíblicos. "
-                    "Las descripciones deben enfocarse exclusivamente en paisajes naturales majestuosos y serenos. "
-                    "Incorpora elementos como: montañas, cielos, ríos, árboles, bosques, barrancos, praderas y cuerpos de agua. "
-                    "Describe detalles como colores específicos (dorado, verde, azul claro), texturas (rocosa, suave, reflejante), "
-                    "juegos de luces (amanecer, atardecer, luz de luna) y atmósferas (calma, majestuosidad, misterio). "
-                    "Evita completamente menciones de personas, animales, figuras religiosas o construcciones humanas. "
-                    "Crea descripciones vivas y visuales que sirvan como referencia para ilustraciones."
-                )},
-                {"role": "user", "content": f"Describe un paisaje visual basado en la siguiente oración:\n{cleaned_sentence}"}
-            ],
-            max_tokens=150,
-            temperature=0.5
-        )
-        if response.choices and response.choices[0].message:
-            prompt = response.choices[0].message.content.strip()
-        else:
-            raise ValueError("La respuesta de OpenAI no contiene un mensaje válido.")
-        final_prompt = (
-            f"{prompt}. "
-            "Asegúrate de que la imagen represente únicamente un paisaje natural con detalles visuales nítidos, "
-            "como cielos despejados, montañas con sombras suaves, cuerpos de agua reflejantes o praderas verdes. "
-            "No debe incluir personas, animales ni construcciones humanas."
-        )
-        print(f"Prompt generado: {final_prompt}")
-        prompts.append(final_prompt)
+    for i, sentence in enumerate(sentences):
+        prompt = f"Dibuja una impresionante y epica en base a : {sentence}. {NEGATIVE_PROMPT}"
+        if len(prompt) > MAX_CHARS_PROMPT:
+            prompt = prompt[:MAX_CHARS_PROMPT].rsplit(" ", 1)[0]
+        logging.info(f"Prompt [{i+1}]: {prompt}")
+        prompts.append(prompt)
     return prompts
 
-def generate_images_with_openai(prompts):
-    """Genera imágenes usando DALL·E a partir de los prompts con caché."""
-    print("Generando imágenes con OpenAI DALL·E (usando caché si existe)...")
-    image_paths = []
-    for idx, prompt in enumerate(prompts):
-        image_path = os.path.join(TEMP_DIR, f"image_{idx}.jpg")
-
-        # Check if the image already exists in the cache
-        if os.path.exists(image_path):
-            print(f"[CACHÉ] Usando imagen existente: {image_path}")
-            image_paths.append(image_path)
-            continue
-        
-        # Generate a new image if not cached
-        print(f"[API] Generando imagen {idx+1}/{len(prompts)}: {prompt}")
+def generate_images_with_local_sd(prompts):
+    logging.info("Generando imágenes con Stable Diffusion...")
+    images = []
+    for i, prompt in enumerate(prompts):
         try:
-            response = client.images.generate(
-                prompt=prompt,
-                n=1,
-                size="512x512"
-            )
-            image_url = response.data[0].url
-            with open(image_path, "wb") as img:
-                img.write(requests.get(image_url).content)
-            print(f"[API] Imagen guardada: {image_path}")
-            image_paths.append(image_path)
+            logging.info(f"Enviando prompt a Stable Diffusion [{i+1}]: {prompt}")
+            response = requests.post("http://127.0.0.1:8000/generate", json={"prompt": prompt})
+            response.raise_for_status()
+            image_name = generate_random_name()
+            image_path = os.path.join(IMAGE_DIR, image_name)
+            with open(image_path, "wb") as f:
+                f.write(response.content)
+            images.append(image_path)
+            logging.info(f"Imagen [{i+1}] guardada: {image_path}")
         except Exception as e:
-            print(f"[ERROR] No se pudo generar la imagen {idx+1}: {e}")
-            raise e
-    return image_paths
+            logging.error(f"Error al generar la imagen [{i+1}]: {e}")
+            raise ValueError("Error en la generación de imágenes.")
+    return images
 
-def text_to_speech(text, output_path):
-    """Convierte el texto en voz usando gTTS."""
-    print("Generando voz...")
-    tts = gTTS(text, lang="es")
-    tts.save(output_path)
+async def generate_voiceover(sentences):
+    logging.info("Generando audios con Edge TTS...")
+    audio_files = []
+    audio_durations = []
+    for i, sentence in enumerate(sentences):
+        try:
+            audio_name = generate_random_name("mp3")
+            audio_path = os.path.join(AUDIO_DIR, audio_name)
+            communicate = Communicate(text=sentence, voice="es-MX-JorgeNeural")
+            await communicate.save(audio_path)
 
-def split_sentence_into_chunks(sentence, chunk_size=4):
-    """Divide una oración en trozos de ~4 palabras cada uno."""
-    words = sentence.split()
-    chunks = []
-    for i in range(0, len(words), chunk_size):
-        chunk = " ".join(words[i:i+chunk_size])
-        chunks.append(chunk)
-    return chunks
+            # Obtener duración del audio
+            audio_clip = AudioFileClip(audio_path)
+            audio_durations.append(audio_clip.duration)
+            audio_clip.close()
 
-def create_video_with_audio(images, sentences, output_path):
-    """
-    Genera un video combinando imágenes y audios individuales con subtítulos sincronizados.
-    Ajusta los subtítulos dividiéndolos en múltiples líneas si son demasiado largos.
-    """
-    print("Creando audios individuales y video...")
-    audio_clips = []
+            audio_files.append(audio_path)
+            logging.info(f"Audio [{i+1}] guardado: {audio_path}, Duración: {audio_durations[-1]} seg")
+        except Exception as e:
+            logging.error(f"Error al generar el audio [{i+1}]: {e}")
+            raise ValueError("Error en la generación de audios.")
+    return audio_files, audio_durations
+
+def create_video_with_audio(images, sentences, audio_files, audio_durations, output_path):
+    logging.info("Creando el video final...")
     video_clips = []
+    
+    for i, (image_path, audio_path, duration) in enumerate(zip(images, audio_files, audio_durations)):
+        try:
+            sentence = sentences[i]
+            wrapped_text = "\n".join(wrap(sentence, width=MAX_CHARS_SUBTITLE))
+            font_size = 40 if len(sentence) < 100 else 30
 
-    # Generar un audio por cada oración
-    for idx, (image, sentence) in enumerate(zip(images, sentences)):
-        audio_path = os.path.join(TEMP_DIR, f"audio_{idx}.mp3")
-        
-        # Crear el audio con gTTS
-        tts = gTTS(sentence, lang="es")
-        tts.save(audio_path)
-        print(f"Audio generado: {audio_path}")
+            # Crear subtítulos
+            subtitle = TextClip(
+                wrapped_text, 
+                fontsize=font_size,
+                color='white',
+                bg_color='black',
+                size=(1920, None),
+                method='caption'
+            )
+            subtitle = subtitle.set_duration(duration).set_position(('center', 'bottom'))
 
-        # Cargar el audio generado
-        audio_clip = AudioFileClip(audio_path)
-        audio_clips.append(audio_clip)
+            # Crear clip de imagen
+            image_clip = ImageClip(image_path).set_duration(duration)
+            audio_clip = AudioFileClip(audio_path).set_duration(duration)
+            
+            # Combinar imagen, subtítulo y audio
+            video_clip = CompositeVideoClip([image_clip, subtitle]).set_audio(audio_clip)
+            video_clips.append(video_clip)
+            
+            logging.info(f"Clip [{i+1}] creado con duración: {duration} seg")
+        except Exception as e:
+            logging.error(f"Error creando clip [{i+1}]: {e}")
 
-        # Crear imagen clip con duración igual a la del audio
-        image_clip = ImageClip(image, duration=audio_clip.duration)
-        image_clip = image_clip.resize(height=720).crop(x1=10, y1=10, x2=image_clip.w-10, y2=image_clip.h-10)
-
-        # Dividir el subtítulo en líneas de ~50 caracteres (ajustable)
-        max_chars_per_line = 50
-        wrapped_text = "\n".join(wrap(sentence, width=max_chars_per_line))
-
-        # Ajustar el tamaño de la fuente dinámicamente si el texto es muy largo
-        font_size = 40 if len(sentence) < 100 else 30
-
-        # Agregar subtítulos sincronizados
-        subtitle = TextClip(wrapped_text, fontsize=font_size, color='white', bg_color='black',
-                            size=(image_clip.w, None), method='caption')
-        subtitle = subtitle.set_duration(audio_clip.duration).set_position(('center', 'bottom'))
-
-        # Combinar imagen y subtítulos
-        video_with_subtitles = CompositeVideoClip([image_clip, subtitle])
-        video_with_subtitles = video_with_subtitles.set_audio(audio_clip)
-
-        video_clips.append(video_with_subtitles)
-
-    # Unir todos los clips en un solo video
     final_video = concatenate_videoclips(video_clips, method="compose")
-    final_video.write_videofile(output_path, fps=24, threads=4)
-
+    final_video.write_videofile(output_path, fps=FPS, threads=4)
+    logging.info(f"Video guardado exitosamente: {output_path}")
+    return output_path
 
 def main():
-    TEXT = """
-    En el principio creó Dios los cielos y la tierra. Y la tierra estaba desordenada y vacía,
-    y las tinieblas estaban sobre la faz del abismo, y el Espíritu de Dios se movía sobre la faz de las aguas.
-    Y dijo Dios: Sea la luz; y fue la luz. Y vio Dios que la luz era buena; y separó Dios la luz de las tinieblas.
-    Llamó Dios a la luz Día, y a las tinieblas llamó Noche. Y fue la tarde y la mañana un día.
-    """
+    TEXT = """ La fábula de la luciérnaga y la serpiente narra cómo una serpiente perseguía incansablemente a una luciérnaga. Tras varios días de huir, la luciérnaga, agotada, se detuvo y le dijo a la serpiente: “¿Puedo hacerte tres preguntas antes de que me devores?”. La serpiente aceptó. La luciérnaga preguntó: “¿Pertenezco a tu cadena alimenticia?”. La serpiente respondió: “No”. La luciérnaga continuó: “¿Te hice algún daño?”. La serpiente admitió: “No”. Finalmente, la luciérnaga preguntó: “Entonces, ¿por qué quieres acabar conmigo?”. La serpiente contestó: “Porque no soporto verte brillar”.
 
-    # Dividir texto en oraciones
+    La luciérnaga, con valentía y determinación, respondió: “Pues si esa es la razón, voy a brillar más fuerte y volar más alto”. La moraleja de la fábula es clara: no permitas que la envidia apague tu luz; al contrario, enfréntala brillando con más intensidad y alcanzando nuevas alturas."""
     sentences = split_text_into_sentences(TEXT)
-    print(f"Oraciones extraídas: {sentences}")
-
-    # Verificar si las imágenes ya existen en caché
-    cached_images = [os.path.join(TEMP_DIR, f"image_{i}.jpg") for i in range(len(sentences))]
-    all_images_cached = all(os.path.exists(image) for image in cached_images)
-
-    if all_images_cached:
-        print("[CACHÉ] Todas las imágenes ya existen, omitiendo generación de prompts e imágenes.")
-        images = cached_images
-    else:
-        print("Generando prompts e imágenes...")
-        prompts = generate_prompts_from_text(sentences)
-        print(f"Prompts generados: {prompts}")
-        images = generate_images_with_openai(prompts)
-
-    # Crear video
-    create_video_with_audio(images, sentences, OUTPUT_VIDEO)
-    print(f"Video creado exitosamente: {OUTPUT_VIDEO}")
+    sentences = [clean_and_trim_sentence(sentence, MAX_TOKENS_SD) for sentence in sentences]
+    prompts = generate_prompts_from_text(sentences)
+    images = generate_images_with_local_sd(prompts)
+    audio_files, audio_durations = asyncio.run(generate_voiceover(sentences))
+    final_video_path = create_video_with_audio(images, sentences, audio_files, audio_durations, OUTPUT_VIDEO_PATH)
+    logging.info(f"Proceso completado. Video final: {final_video_path}")
 
 if __name__ == "__main__":
     main()

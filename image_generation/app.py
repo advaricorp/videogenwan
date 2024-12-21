@@ -21,7 +21,7 @@ class PromptRequest(BaseModel):
 @app.post("/generate")
 async def generate_image(req: PromptRequest):
     image = pipe(
-        req.prompt,
+        prompt=req.prompt,
         negative_prompt=req.negative_prompt,
         num_inference_steps=28,
         guidance_scale=7.0

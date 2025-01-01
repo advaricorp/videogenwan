@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+torch
+torchvision
+diffusers
+transformers
+python-dotenv
+gtts
+moviepy
+requests
+Pillow

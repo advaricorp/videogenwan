@@ -1,0 +1,420 @@
+2024-12-17 22:13:27,845 - INFO - Loading Qwen model: Qwen/Qwen2.5-1.5B-Instruct
+2024-12-17 22:14:41,619 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2024-12-17 22:14:43,834 - INFO - Extracted sentences: ['Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas', 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión', 'Y llamó Dios a la expansión Cielos', 'Y fue la tarde y la mañana el día segundo']
+2024-12-17 22:14:43,834 - INFO - Generating prompts with Qwen LLM...
+2024-12-17 22:14:43,834 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+2024-12-17 22:14:52,913 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast and serene expanse of an ancient forest, where the canopy whispers secrets to the wind, lies a hidden sanctuary known as the Serene Echoes. The air is thick with the scent of pine and earth, carrying the soft murmur of rivers running through the heart of this enchanted place.
+
+At its center stands a colossal stone monument, its base carved from the very rock itself, symbolizing the power and wisdom of creation. This monument marks the birthplace of the Great Expansion, a moment when God breathed life into the world, separating the waters above from the waters below.
+
+The land around it is dotted with small groves of trees, each bearing unique species that have evolved over millennia in harmony with nature's rhythms. Mosses cling
+2024-12-17 22:14:52,913 - INFO - Generated prompt for 'Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast and serene expanse of an ancient forest, where the canopy whispers secrets to the wind, lies a hidden sanctuary known as the Serene Echoes. The air is thick with the scent of pine and earth, carrying the soft murmur of rivers running through the heart of this enchanted place.
+
+At its center stands a colossal stone monument, its base carved from the very rock itself, symbolizing the power and wisdom of creation. This monument marks the birthplace of the Great Expansion, a moment when God breathed life into the world, separating the waters above from the waters below.
+
+The land around it is dotted with small groves of trees, each bearing unique species that have evolved over millennia in harmony with nature's rhythms. Mosses cling
+2024-12-17 22:14:52,913 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+2024-12-17 22:14:58,443 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the realm of creation, where divine hands stretch across the cosmos, there emerges an expansive tableau that embodies the grandeur and harmony of nature's birth. This scene unfolds as a vast, undulating sea of emerald green meets the azure sky above, a symphony of life unfurling in its purest form.
+
+The horizon is painted with a tapestry of rolling hills, their peaks crowned with ancient trees whose gnarled roots pierce through the earth like skeletal fingers reaching towards the heavens. These towering giants stand guard over valleys carpeted with wildflowers, their leaves whispering secrets to the breeze. The air here is thick with the scent of damp earth and blooming blooms, a testament to the vitality that thrives within this verd
+2024-12-17 22:14:58,443 - INFO - Generated prompt for 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the realm of creation, where divine hands stretch across the cosmos, there emerges an expansive tableau that embodies the grandeur and harmony of nature's birth. This scene unfolds as a vast, undulating sea of emerald green meets the azure sky above, a symphony of life unfurling in its purest form.
+
+The horizon is painted with a tapestry of rolling hills, their peaks crowned with ancient trees whose gnarled roots pierce through the earth like skeletal fingers reaching towards the heavens. These towering giants stand guard over valleys carpeted with wildflowers, their leaves whispering secrets to the breeze. The air here is thick with the scent of damp earth and blooming blooms, a testament to the vitality that thrives within this verd
+2024-12-17 22:14:58,443 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+2024-12-17 22:15:04,053 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In this breathtaking natural landscape, the sky is an endless canvas of azure and white clouds, stretching as far as the eye can see. The sun rises in the east, casting golden rays across the horizon, painting the earth with hues of pink and orange. A gentle breeze carries the scent of pine and wildflowers.
+
+Amidst this expansive expanse, towering mountains rise majestically from the earth, their peaks capped with snow and ice reflecting the vibrant colors of the day. Waterfalls cascade down their sides, tumbling into crystal-clear pools below. 
+
+Forests clothe the valleys in verdant green, their leaves whispering secrets to each other under the watchful gaze of ancient trees. Wild animals roam freely, their calls blending harmoniously
+2024-12-17 22:15:04,053 - INFO - Generated prompt for 'Y llamó Dios a la expansión Cielos': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In this breathtaking natural landscape, the sky is an endless canvas of azure and white clouds, stretching as far as the eye can see. The sun rises in the east, casting golden rays across the horizon, painting the earth with hues of pink and orange. A gentle breeze carries the scent of pine and wildflowers.
+
+Amidst this expansive expanse, towering mountains rise majestically from the earth, their peaks capped with snow and ice reflecting the vibrant colors of the day. Waterfalls cascade down their sides, tumbling into crystal-clear pools below. 
+
+Forests clothe the valleys in verdant green, their leaves whispering secrets to each other under the watchful gaze of ancient trees. Wild animals roam freely, their calls blending harmoniously
+2024-12-17 22:15:04,053 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+2024-12-17 22:15:09,625 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the twilight of the second day, a vast expanse of verdant forests loomed over rolling hills and valleys, their leaves whispering secrets to the gentle breeze. The sky above was painted with hues of orange and pink, as if time itself had paused in this serene moment. Sunlight filtered through the canopy like gold threads woven into the tapestry of nature.
+
+A crystal-clear river wound its way through the heart of the forest, its waters reflecting the vibrant colors around it. Fish darted beneath the surface, their silhouettes against the rippling water adding life to the scene. In the distance, ancient trees stood sentinel, their gnarled trunks reaching towards the heavens, each one bearing stories etched deep within its bark.
+2024-12-17 22:15:09,626 - INFO - Generated prompt for 'Y fue la tarde y la mañana el día segundo': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the twilight of the second day, a vast expanse of verdant forests loomed over rolling hills and valleys, their leaves whispering secrets to the gentle breeze. The sky above was painted with hues of orange and pink, as if time itself had paused in this serene moment. Sunlight filtered through the canopy like gold threads woven into the tapestry of nature.
+
+A crystal-clear river wound its way through the heart of the forest, its waters reflecting the vibrant colors around it. Fish darted beneath the surface, their silhouettes against the rippling water adding life to the scene. In the distance, ancient trees stood sentinel, their gnarled trunks reaching towards the heavens, each one bearing stories etched deep within its bark.
+2024-12-17 22:15:09,627 - INFO - Generating images with local Stable Diffusion...
+2024-12-17 22:15:09,627 - INFO - [API LOCAL] Generating image 1/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast and serene expanse of an ancient forest, where the canopy whispers secrets to the wind, lies a hidden sanctuary known as the Serene Echoes. The air is thick with the scent of pine and earth, carrying the soft murmur of rivers running through the heart of this enchanted place.
+
+At its center stands a colossal stone monument, its base carved from the very rock itself, symbolizing the power and wisdom of creation. This monument marks the birthplace of the Great Expansion, a moment when God breathed life into the world, separating the waters above from the waters below.
+
+The land around it is dotted with small groves of trees, each bearing unique species that have evolved over millennia in harmony with nature's rhythms. Mosses cling
+2024-12-17 22:15:09,628 - ERROR - [ERROR] Could not generate image 1: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f950b504b90>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-12-17 22:18:54,558 - INFO - Loading Qwen model: Qwen/Qwen2.5-1.5B-Instruct
+2024-12-17 22:18:55,372 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2024-12-17 22:18:56,745 - INFO - Extracted sentences: ['Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas', 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión', 'Y llamó Dios a la expansión Cielos', 'Y fue la tarde y la mañana el día segundo']
+2024-12-17 22:18:56,745 - INFO - Generating prompts with Qwen LLM...
+2024-12-17 22:18:56,746 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+2024-12-17 22:19:02,566 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of the ocean, a towering mountain range stands as a sentinel, its peak piercing the clouds with an otherworldly glow. The base of this mountain is a shimmering sea of turquoise and emerald green, where sunlight filters through the dense foliage, casting dappled shadows across the verdant slopes.
+
+As you ascend the winding path to the summit, the air grows cooler and crisp, carrying with it the faint scent of pine and damp earth. Atop the mountain, there’s a clearing surrounded by lush forests, each tree reaching towards the sky in a silent chorus of growth and renewal. 
+
+From here, the view stretches out before you—beyond the mountains lies a panorama of azure waters stretching endlessly into the horizon
+2024-12-17 22:19:02,567 - INFO - Generated prompt for 'Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of the ocean, a towering mountain range stands as a sentinel, its peak piercing the clouds with an otherworldly glow. The base of this mountain is a shimmering sea of turquoise and emerald green, where sunlight filters through the dense foliage, casting dappled shadows across the verdant slopes.
+
+As you ascend the winding path to the summit, the air grows cooler and crisp, carrying with it the faint scent of pine and damp earth. Atop the mountain, there’s a clearing surrounded by lush forests, each tree reaching towards the sky in a silent chorus of growth and renewal. 
+
+From here, the view stretches out before you—beyond the mountains lies a panorama of azure waters stretching endlessly into the horizon
+2024-12-17 22:19:02,567 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+2024-12-17 22:19:07,694 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In this grand and timeless masterpiece, the expansive sky stretches out above an emerald sea of verdant forests, where towering pines reach towards the heavens like ancient sentinels. The sun casts its warm glow across the land, casting long shadows on the lush foliage below.
+
+Below the trees, a winding river flows gently through the heart of the forest, its waters reflecting the vibrant hues of the surrounding flora. A cluster of wildflowers carpet the banks with their sweet fragrance, drawing bees and butterflies to nectar-filled blooms.
+
+The air is filled with the symphony of bird songs, ranging from the melodic trills of warblers to the soaring calls of hawks. In the distance, a small herd of deer grazes peacefully, their coats
+2024-12-17 22:19:07,694 - INFO - Generated prompt for 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In this grand and timeless masterpiece, the expansive sky stretches out above an emerald sea of verdant forests, where towering pines reach towards the heavens like ancient sentinels. The sun casts its warm glow across the land, casting long shadows on the lush foliage below.
+
+Below the trees, a winding river flows gently through the heart of the forest, its waters reflecting the vibrant hues of the surrounding flora. A cluster of wildflowers carpet the banks with their sweet fragrance, drawing bees and butterflies to nectar-filled blooms.
+
+The air is filled with the symphony of bird songs, ranging from the melodic trills of warblers to the soaring calls of hawks. In the distance, a small herd of deer grazes peacefully, their coats
+2024-12-17 22:19:07,694 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+2024-12-17 22:19:12,980 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In this grand and timeless creation, the heavens stretch vast as a canvas painted with celestial hues, inviting the eye to explore its boundless expanse. The horizon is a line of shimmering silver where the sky meets the earth, reflecting the purity of the atmosphere above.
+
+Mountains rise majestically from the earth's surface, their peaks crowned with snow-capped summits that pierce through the clouds like sentinels guarding the sky. These towering giants whisper secrets of ancient times, their rugged faces etched with stories told in stone and wind.
+
+Below these mighty mountains lies a valley carpeted with emerald green grasses, dotted with wildflowers in vibrant colors that dance under the sun. Streams meander gracefully through the valleys, their waters
+2024-12-17 22:19:12,980 - INFO - Generated prompt for 'Y llamó Dios a la expansión Cielos': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In this grand and timeless creation, the heavens stretch vast as a canvas painted with celestial hues, inviting the eye to explore its boundless expanse. The horizon is a line of shimmering silver where the sky meets the earth, reflecting the purity of the atmosphere above.
+
+Mountains rise majestically from the earth's surface, their peaks crowned with snow-capped summits that pierce through the clouds like sentinels guarding the sky. These towering giants whisper secrets of ancient times, their rugged faces etched with stories told in stone and wind.
+
+Below these mighty mountains lies a valley carpeted with emerald green grasses, dotted with wildflowers in vibrant colors that dance under the sun. Streams meander gracefully through the valleys, their waters
+2024-12-17 22:19:12,980 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+2024-12-17 22:19:18,251 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the vast expanse of the Andes Mountains, a serene and ancient landscape unfolds before your eyes. The sun is setting on the horizon, casting an orange glow over the snow-capped peaks. The air is crisp with the scent of pine and wildflowers, mingling with the faint aroma of distant rivers flowing through verdant valleys.
+
+A babbling brook winds its way down from the mountains, carving out shallow pools where tiny fish dart among the stones. A few gnarled old trees stand sentinel along the banks, their bark peeling away to reveal layers of weathered wood beneath. Their leaves rustle softly in the gentle breeze, adding a soothing soundtrack to the scene.
+
+To the east, a wide valley stretches as far as the
+2024-12-17 22:19:18,251 - INFO - Generated prompt for 'Y fue la tarde y la mañana el día segundo': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the vast expanse of the Andes Mountains, a serene and ancient landscape unfolds before your eyes. The sun is setting on the horizon, casting an orange glow over the snow-capped peaks. The air is crisp with the scent of pine and wildflowers, mingling with the faint aroma of distant rivers flowing through verdant valleys.
+
+A babbling brook winds its way down from the mountains, carving out shallow pools where tiny fish dart among the stones. A few gnarled old trees stand sentinel along the banks, their bark peeling away to reveal layers of weathered wood beneath. Their leaves rustle softly in the gentle breeze, adding a soothing soundtrack to the scene.
+
+To the east, a wide valley stretches as far as the
+2024-12-17 22:19:18,251 - INFO - Generating images with local Stable Diffusion...
+2024-12-17 22:19:18,251 - INFO - [API LOCAL] Generating image 1/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of the ocean, a towering mountain range stands as a sentinel, its peak piercing the clouds with an otherworldly glow. The base of this mountain is a shimmering sea of turquoise and emerald green, where sunlight filters through the dense foliage, casting dappled shadows across the verdant slopes.
+
+As you ascend the winding path to the summit, the air grows cooler and crisp, carrying with it the faint scent of pine and damp earth. Atop the mountain, there’s a clearing surrounded by lush forests, each tree reaching towards the sky in a silent chorus of growth and renewal. 
+
+From here, the view stretches out before you—beyond the mountains lies a panorama of azure waters stretching endlessly into the horizon
+2024-12-17 22:19:18,252 - ERROR - [ERROR] Could not generate image 1: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe48710c860>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-12-17 22:20:13,477 - INFO - Loading Qwen model: Qwen/Qwen2.5-1.5B-Instruct
+2024-12-17 22:20:14,238 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2024-12-17 22:20:15,396 - INFO - Extracted sentences: ['Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas', 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión', 'Y llamó Dios a la expansión Cielos', 'Y fue la tarde y la mañana el día segundo']
+2024-12-17 22:20:15,396 - INFO - Generating prompts with Qwen LLM...
+2024-12-17 22:20:15,396 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+2024-12-17 22:20:21,250 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of primordial earth, where the forces of nature dance in an eternal ballet, a scene unfolds as ancient and timeless as the very fabric of creation itself. The horizon is a canvas painted with hues of azure and indigo, stretching endlessly towards the distant peaks of the celestial mountains. The sky above is a dome of purest blue, its edges tinged with hints of violet and purple, creating a shimmering tapestry against the deep, dark sea.
+
+The sea itself is a living entity, teeming with life and color. It is a vibrant ocean, alive with the energy of the sun's rays filtering through its depths. Waves gently caress the shore, whispering secrets to the sand beneath their feet. Beyond the
+2024-12-17 22:20:21,250 - INFO - Generated prompt for 'Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of primordial earth, where the forces of nature dance in an eternal ballet, a scene unfolds as ancient and timeless as the very fabric of creation itself. The horizon is a canvas painted with hues of azure and indigo, stretching endlessly towards the distant peaks of the celestial mountains. The sky above is a dome of purest blue, its edges tinged with hints of violet and purple, creating a shimmering tapestry against the deep, dark sea.
+
+The sea itself is a living entity, teeming with life and color. It is a vibrant ocean, alive with the energy of the sun's rays filtering through its depths. Waves gently caress the shore, whispering secrets to the sand beneath their feet. Beyond the
+2024-12-17 22:20:21,250 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+2024-12-17 22:20:26,893 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the vast expanse of untamed nature, where mountains tower like ancient sentinels and rivers wind through emerald valleys, stands a colossal tree with roots deep as the earth itself. Its branches stretch towards the sky in graceful curves, reaching for the heavens. The tree's trunk is a living testament to endurance, its bark a rich, dark hue that whispers tales of storms past.
+
+Around this grand arboreal cathedral, fields of wildflowers bloom in vibrant hues - reds, purples, yellows, and blues intermingling into a tapestry of life. Butterflies flit from flower to flower, their wings shimmering in the sunlight, while bees hum softly, gathering nectar from each blossom they visit.
+
+Nestled
+2024-12-17 22:20:26,893 - INFO - Generated prompt for 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the vast expanse of untamed nature, where mountains tower like ancient sentinels and rivers wind through emerald valleys, stands a colossal tree with roots deep as the earth itself. Its branches stretch towards the sky in graceful curves, reaching for the heavens. The tree's trunk is a living testament to endurance, its bark a rich, dark hue that whispers tales of storms past.
+
+Around this grand arboreal cathedral, fields of wildflowers bloom in vibrant hues - reds, purples, yellows, and blues intermingling into a tapestry of life. Butterflies flit from flower to flower, their wings shimmering in the sunlight, while bees hum softly, gathering nectar from each blossom they visit.
+
+Nestled
+2024-12-17 22:20:26,893 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+2024-12-17 22:20:32,305 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In the heart of an ancient forest, where the whispers of time meld with the melodies of nature's symphony, stands a towering tree whose trunk is as thick as a mountain and its branches stretch out like the arms of an ancient guardian. This colossal oak is not just any tree; it is a symbol of the divine, embodying the very essence of expansion known in this land.
+
+The sky above is painted with hues of twilight, where stars twinkle faintly through the canopy, casting a soft glow upon the earth below. The air is crisp and fresh, carrying the scent of pine needles and dew-kissed leaves. A gentle breeze rustles the leaves, creating a soothing lullaby that soothes both body and soul.
+
+Amid
+2024-12-17 22:20:32,305 - INFO - Generated prompt for 'Y llamó Dios a la expansión Cielos': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In the heart of an ancient forest, where the whispers of time meld with the melodies of nature's symphony, stands a towering tree whose trunk is as thick as a mountain and its branches stretch out like the arms of an ancient guardian. This colossal oak is not just any tree; it is a symbol of the divine, embodying the very essence of expansion known in this land.
+
+The sky above is painted with hues of twilight, where stars twinkle faintly through the canopy, casting a soft glow upon the earth below. The air is crisp and fresh, carrying the scent of pine needles and dew-kissed leaves. A gentle breeze rustles the leaves, creating a soothing lullaby that soothes both body and soul.
+
+Amid
+2024-12-17 22:20:32,305 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+2024-12-17 22:20:40,409 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the second day of a magical and serene journey through nature's tapestry, a grandeur unfolds in an undulating expanse of verdant hills, where ancient pines stand as sentinels over vast meadows carpeted with wildflowers in hues of crimson, gold, and violet. The air is crisp yet filled with the sweet perfume of blooming blooms, carried on gentle breezes that dance across the rolling hills.
+
+A crystal-clear stream winds its way down from the peaks, carving out deep valleys where waterfalls cascade into pools of emerald green. Each waterfall sings a melodious song of ageless beauty, their waters glistening like polished silver against the backdrop of the sun-kissed cliffs above.
+
+Amidst this lush paradise
+2024-12-17 22:20:40,410 - INFO - Generated prompt for 'Y fue la tarde y la mañana el día segundo': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+In the second day of a magical and serene journey through nature's tapestry, a grandeur unfolds in an undulating expanse of verdant hills, where ancient pines stand as sentinels over vast meadows carpeted with wildflowers in hues of crimson, gold, and violet. The air is crisp yet filled with the sweet perfume of blooming blooms, carried on gentle breezes that dance across the rolling hills.
+
+A crystal-clear stream winds its way down from the peaks, carving out deep valleys where waterfalls cascade into pools of emerald green. Each waterfall sings a melodious song of ageless beauty, their waters glistening like polished silver against the backdrop of the sun-kissed cliffs above.
+
+Amidst this lush paradise
+2024-12-17 22:20:40,410 - INFO - Generating images with local Stable Diffusion...
+2024-12-17 22:20:40,410 - INFO - [API LOCAL] Generating image 1/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of primordial earth, where the forces of nature dance in an eternal ballet, a scene unfolds as ancient and timeless as the very fabric of creation itself. The horizon is a canvas painted with hues of azure and indigo, stretching endlessly towards the distant peaks of the celestial mountains. The sky above is a dome of purest blue, its edges tinged with hints of violet and purple, creating a shimmering tapestry against the deep, dark sea.
+
+The sea itself is a living entity, teeming with life and color. It is a vibrant ocean, alive with the energy of the sun's rays filtering through its depths. Waves gently caress the shore, whispering secrets to the sand beneath their feet. Beyond the
+2024-12-17 22:20:40,410 - ERROR - [ERROR] Could not generate image 1: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f81ee889910>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-12-17 22:30:17,358 - INFO - Loading Qwen model: Qwen/Qwen2.5-1.5B-Instruct
+2024-12-17 22:30:18,317 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2024-12-17 22:30:20,826 - INFO - Extracted sentences: ['Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas', 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión', 'Y llamó Dios a la expansión Cielos', 'Y fue la tarde y la mañana el día segundo']
+2024-12-17 22:30:20,826 - INFO - Generating prompts with Qwen LLM...
+2024-12-17 22:30:20,826 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+2024-12-17 22:30:26,796 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of untamed nature, where ancient trees stand as silent sentinels over the earth's cradle, a grand cascade begins its journey to reveal the hidden depths below. The sun dances upon the surface, casting a golden glow that warms the stone and water alike.
+
+Amidst this serene scene, a mighty river flows with purpose, carrying life-giving waters across the land. Its banks rise from the earth like gentle hills, their verdant foliage providing a lush backdrop against which the river's course meanders gracefully. 
+
+The river winds through valleys carpeted in wildflowers, each petal whispering tales of past civilizations and the timeless beauty they left behind. As it reaches a narrow gorge, the river narrows
+2024-12-17 22:30:26,797 - INFO - Generated prompt for 'Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of untamed nature, where ancient trees stand as silent sentinels over the earth's cradle, a grand cascade begins its journey to reveal the hidden depths below. The sun dances upon the surface, casting a golden glow that warms the stone and water alike.
+
+Amidst this serene scene, a mighty river flows with purpose, carrying life-giving waters across the land. Its banks rise from the earth like gentle hills, their verdant foliage providing a lush backdrop against which the river's course meanders gracefully. 
+
+The river winds through valleys carpeted in wildflowers, each petal whispering tales of past civilizations and the timeless beauty they left behind. As it reaches a narrow gorge, the river narrows
+2024-12-17 22:30:26,797 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+2024-12-17 22:30:32,237 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the vast expanse of time and space, where the cosmos whispers secrets to the earth, there lies a land of unparalleled beauty and tranquility. This is not merely a scene but an immersive experience—a tapestry woven from the threads of ancient wisdom and modern wonder.
+
+The sky above stretches like a canvas painted with hues of twilight and dawn, blending into a serene blue that seems almost ethereal. The air here is crisp yet warm, carrying the faint scent of salt and earth, as if nature herself has perfumed it with her own essence.
+
+At the heart of this expansive territory stands a mountain range, its peaks crowned with snow-capped summits reflecting the light of the setting sun in shimmering diamonds. These mountains rise majestically,
+2024-12-17 22:30:32,237 - INFO - Generated prompt for 'E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the vast expanse of time and space, where the cosmos whispers secrets to the earth, there lies a land of unparalleled beauty and tranquility. This is not merely a scene but an immersive experience—a tapestry woven from the threads of ancient wisdom and modern wonder.
+
+The sky above stretches like a canvas painted with hues of twilight and dawn, blending into a serene blue that seems almost ethereal. The air here is crisp yet warm, carrying the faint scent of salt and earth, as if nature herself has perfumed it with her own essence.
+
+At the heart of this expansive territory stands a mountain range, its peaks crowned with snow-capped summits reflecting the light of the setting sun in shimmering diamonds. These mountains rise majestically,
+2024-12-17 22:30:32,239 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+2024-12-17 22:30:40,514 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In the vast expanse of an ancient, serene desert, where the sun casts long shadows and the air is thick with the scent of dry earth and distant flowers, lies a realm untouched by time. The sky above stretches as far as the eye can see, its horizon blurred into a canvas of deep blue punctuated by wispy clouds that seem to dance gracefully on their way across the boundless space.
+
+The land itself is a tapestry woven from layers of rich, fertile soil—gold in hue, cradled by gentle slopes that rise gently towards the heavens. Here, the flora thrives under the watchful gaze of the stars, each plant a testament to the enduring spirit of this place. Sunflowers sway like silent sentinels,
+2024-12-17 22:30:40,514 - INFO - Generated prompt for 'Y llamó Dios a la expansión Cielos': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In the vast expanse of an ancient, serene desert, where the sun casts long shadows and the air is thick with the scent of dry earth and distant flowers, lies a realm untouched by time. The sky above stretches as far as the eye can see, its horizon blurred into a canvas of deep blue punctuated by wispy clouds that seem to dance gracefully on their way across the boundless space.
+
+The land itself is a tapestry woven from layers of rich, fertile soil—gold in hue, cradled by gentle slopes that rise gently towards the heavens. Here, the flora thrives under the watchful gaze of the stars, each plant a testament to the enduring spirit of this place. Sunflowers sway like silent sentinels,
+2024-12-17 22:30:40,514 - INFO - Sending to Qwen: Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+2024-12-17 22:30:45,926 - INFO - Qwen response: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+The sun had just dipped below the horizon, casting a warm, golden glow across the vast expanse of the landscape. The sky was painted with hues of orange and pink, blending seamlessly into the deep blue of the evening. A gentle breeze carried the scent of blooming wildflowers mixed with the distant hum of wildlife.
+
+In the foreground, a dense forest stood as a silent sentinel, its towering trees providing shade from the encroaching night. The leaves shimmered under the last rays of sunlight, their surfaces reflecting the vibrant colors of the setting sun. In one corner of the scene, a babbling brook wound through the woods, its waters clear and crystal-like in the fading light.
+
+Further away, the rolling hills gave way to expansive fields
+2024-12-17 22:30:45,926 - INFO - Generated prompt for 'Y fue la tarde y la mañana el día segundo': system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+The sun had just dipped below the horizon, casting a warm, golden glow across the vast expanse of the landscape. The sky was painted with hues of orange and pink, blending seamlessly into the deep blue of the evening. A gentle breeze carried the scent of blooming wildflowers mixed with the distant hum of wildlife.
+
+In the foreground, a dense forest stood as a silent sentinel, its towering trees providing shade from the encroaching night. The leaves shimmered under the last rays of sunlight, their surfaces reflecting the vibrant colors of the setting sun. In one corner of the scene, a babbling brook wound through the woods, its waters clear and crystal-like in the fading light.
+
+Further away, the rolling hills gave way to expansive fields
+2024-12-17 22:30:45,926 - INFO - Generating images with local Stable Diffusion...
+2024-12-17 22:30:45,926 - INFO - [API LOCAL] Generating image 1/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Luego dijo Dios: Haya expansión en medio de las aguas, y separe las aguas de las aguas
+assistant
+In the vast expanse of untamed nature, where ancient trees stand as silent sentinels over the earth's cradle, a grand cascade begins its journey to reveal the hidden depths below. The sun dances upon the surface, casting a golden glow that warms the stone and water alike.
+
+Amidst this serene scene, a mighty river flows with purpose, carrying life-giving waters across the land. Its banks rise from the earth like gentle hills, their verdant foliage providing a lush backdrop against which the river's course meanders gracefully. 
+
+The river winds through valleys carpeted in wildflowers, each petal whispering tales of past civilizations and the timeless beauty they left behind. As it reaches a narrow gorge, the river narrows
+2024-12-17 22:30:52,868 - INFO - [API LOCAL] Image saved: temp_files/image_0.jpg
+2024-12-17 22:30:52,869 - INFO - [API LOCAL] Generating image 2/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: E hizo Dios la expansión, y separó las aguas que estaban debajo de la expansión, de las aguas que estaban sobre la expansión
+assistant
+In the vast expanse of time and space, where the cosmos whispers secrets to the earth, there lies a land of unparalleled beauty and tranquility. This is not merely a scene but an immersive experience—a tapestry woven from the threads of ancient wisdom and modern wonder.
+
+The sky above stretches like a canvas painted with hues of twilight and dawn, blending into a serene blue that seems almost ethereal. The air here is crisp yet warm, carrying the faint scent of salt and earth, as if nature herself has perfumed it with her own essence.
+
+At the heart of this expansive territory stands a mountain range, its peaks crowned with snow-capped summits reflecting the light of the setting sun in shimmering diamonds. These mountains rise majestically,
+2024-12-17 22:31:25,682 - INFO - [API LOCAL] Image saved: temp_files/image_1.jpg
+2024-12-17 22:31:25,682 - INFO - [API LOCAL] Generating image 3/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y llamó Dios a la expansión Cielos
+assistant
+In the vast expanse of an ancient, serene desert, where the sun casts long shadows and the air is thick with the scent of dry earth and distant flowers, lies a realm untouched by time. The sky above stretches as far as the eye can see, its horizon blurred into a canvas of deep blue punctuated by wispy clouds that seem to dance gracefully on their way across the boundless space.
+
+The land itself is a tapestry woven from layers of rich, fertile soil—gold in hue, cradled by gentle slopes that rise gently towards the heavens. Here, the flora thrives under the watchful gaze of the stars, each plant a testament to the enduring spirit of this place. Sunflowers sway like silent sentinels,
+2024-12-17 22:32:00,926 - INFO - [API LOCAL] Image saved: temp_files/image_2.jpg
+2024-12-17 22:32:00,926 - INFO - [API LOCAL] Generating image 4/4: system
+You are Qwen, a helpful assistant that generates vivid, descriptive visual prompts for creative projects.
+user
+Describe a majestic natural landscape inspired by: Y fue la tarde y la mañana el día segundo
+assistant
+The sun had just dipped below the horizon, casting a warm, golden glow across the vast expanse of the landscape. The sky was painted with hues of orange and pink, blending seamlessly into the deep blue of the evening. A gentle breeze carried the scent of blooming wildflowers mixed with the distant hum of wildlife.
+
+In the foreground, a dense forest stood as a silent sentinel, its towering trees providing shade from the encroaching night. The leaves shimmered under the last rays of sunlight, their surfaces reflecting the vibrant colors of the setting sun. In one corner of the scene, a babbling brook wound through the woods, its waters clear and crystal-like in the fading light.
+
+Further away, the rolling hills gave way to expansive fields
+2024-12-17 22:32:31,430 - INFO - [API LOCAL] Image saved: temp_files/image_3.jpg
+2024-12-17 22:32:31,430 - INFO - Creating individual audios and video...
+2024-12-17 22:32:31,782 - INFO - Audio generated: temp_files/audio_0.mp3
+2024-12-17 22:32:32,882 - INFO - Audio generated: temp_files/audio_1.mp3
+2024-12-17 22:32:33,444 - INFO - Audio generated: temp_files/audio_2.mp3
+2024-12-17 22:32:33,840 - INFO - Audio generated: temp_files/audio_3.mp3
+2024-12-17 22:32:51,790 - INFO - Video saved to: output/genesis_video.mp4
+2024-12-17 22:32:51,790 - INFO - Video successfully created: output/genesis_video.mp4

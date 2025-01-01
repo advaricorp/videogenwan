@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                AI Video Generator
+            </h1>
+            <p class="text-gray-400 mt-2">Genera videos impresionantes con IA</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-gray-800 rounded-xl shadow-2xl p-6 space-y-6">
+                {% if error %}
+                <div class="bg-red-500/10 border border-red-500 text-red-500 rounded-lg p-4">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                {% if video_generated %}
+                <div class="bg-green-500/10 border border-green-500 text-green-500 rounded-lg p-4 flex justify-between items-center">
+                    <span>¡Video generado exitosamente!</span>
+                    <a href="{{ url_for('download') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Descargar Video</a>
+                </div>
+                {% endif %}
+
+                <form id="generateForm" class="space-y-6">
+                    <!-- Text Input -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300">Texto para el video, no uses acentos o caracteres especiales.</label>
+                        <textarea 
+                            name="text" 
+                            required
+                            class="w-full h-32 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-100 placeholder-gray-400"
+                            placeholder="Escribe el texto para tu video..."></textarea>
+                    </div>
+
+                    <!-- Master Prompt -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300">Master Prompt</label>
+                        <textarea 
+                            name="master_prompt" 
+                            class="w-full h-20 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-100 placeholder-gray-400"
+                            placeholder="Prompt maestro para la generación de imágenes..."
+                        >Genera una imagen impresionante, fotorrealista, de alta calidad, con iluminación cinematográfica y composición profesional en base a:</textarea>
+                    </div>
+
+                    <!-- Tokens and FPS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Máximo de tokens por oración</label>
+                            <input type="number" name="max_tokens" value="75" 
+                                class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">FPS del video</label>
+                            <input type="number" name="fps" value="24" 
+                                class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Voice and Effects -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Voz</label>
+                            <select name="voice" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <!-- Español -->
+                                <optgroup label="Español">
+                                    <option value="es-ES-AlvaroNeural">Alvaro (ES)</option>
+                                    <option value="es-MX-JorgeNeural">Jorge (MX)</option>
+                                    <option value="es-ES-ElviraNeural">Elvira (ES)</option>
+                                </optgroup>
+                                <!-- Inglés -->
+                                <optgroup label="English">
+                                    <option value="en-US-ChristopherNeural">Christopher (US)</option>
+                                    <option value="en-GB-RyanNeural">Ryan (UK)</option>
+                                    <option value="en-US-JennyNeural">Jenny (US)</option>
+                                </optgroup>
+                                <!-- Francés -->
+                                <optgroup label="Français">
+                                    <option value="fr-FR-HenriNeural">Henri (FR)</option>
+                                    <option value="fr-CA-AntoineNeural">Antoine (CA)</option>
+                                    <option value="fr-FR-DeniseNeural">Denise (FR)</option>
+                                </optgroup>
+                                <!-- Italiano -->
+                                <optgroup label="Italiano">
+                                    <option value="it-IT-DiegoNeural">Diego (IT)</option>
+                                    <option value="it-IT-BenignoNeural">Benigno (IT)</option>
+                                    <option value="it-IT-ElsaNeural">Elsa (IT)</option>
+                                </optgroup>
+                                <!-- Portugués -->
+                                <optgroup label="Português">
+                                    <option value="pt-BR-AntonioNeural">Antonio (BR)</option>
+                                    <option value="pt-PT-DuarteNeural">Duarte (PT)</option>
+                                    <option value="pt-BR-FranciscaNeural">Francisca (BR)</option>
+                                </optgroup>
+                                <!-- Filipino -->
+                                <optgroup label="Filipino">
+                                    <option value="fil-PH-AngeloNeural">Angelo (PH)</option>
+                                    <option value="en-PH-JamesNeural">James (PH)</option>
+                                    <option value="fil-PH-BlessicaNeural">Blessica (PH)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Efecto Visual</label>
+                            <select name="effect_type" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="random">Aleatorio</option>
+                                <option value="zoom_in">Zoom In</option>
+                                <option value="zoom_out">Zoom Out</option>
+                                <option value="pan_left_to_right">Pan Izquierda a Derecha</option>
+                                <option value="pan_right_to_left">Pan Derecha a Izquierda</option>
+                                <option value="ken_burns">Ken Burns</option>
+                                <option value="none">Sin efecto</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Negative Prompts and Transitions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Prompt Negativo</label>
+                            <textarea 
+                                name="negative_prompt" 
+                                class="w-full h-20 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-100 placeholder-gray-400"
+                                placeholder="Prompt negativo para la generación de imágenes..."></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Transición</label>
+                            <select name="transition" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="fade">Fade</option>
+                                <option value="none">Sin transición</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300">
+                        Generar Video
+                    </button>
+                </form>
+
+                <!-- Progress Bar -->
+                <div id="progress-container" class="hidden space-y-4">
+                    <div class="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <p id="progress-text" class="text-center text-sm text-gray-400"></p>
+                </div>
+
+                <!-- Video Player -->
+                <div id="video-container" class="hidden space-y-4">
+                    <div class="relative rounded-lg overflow-hidden bg-gray-700">
+                        <video id="video-player" controls class="w-full">
+                            <source src="" type="video/mp4">
+                        </video>
+                    </div>
+                    <a id="download-button" href="/download" class="block w-full text-center py-2 px-4 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+                        Descargar Video
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('generateForm');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const videoContainer = document.getElementById('video-container');
+        const videoPlayer = document.getElementById('video-player');
+        const downloadButton = document.getElementById('download-button');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            form.querySelector('button').disabled = true;
+            progressContainer.classList.remove('hidden');
+            videoContainer.classList.add('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = 'Iniciando...';
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const eventSource = new EventSource('/progress');
+                eventSource.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    progressBar.style.width = `${data.progress}%`;
+                    progressText.textContent = data.message;
+                    
+                    if (data.progress >= 100) {
+                        eventSource.close();
+                        videoContainer.classList.remove('hidden');
+                        videoPlayer.src = `/video?t=${Date.now()}`;
+                        form.querySelector('button').disabled = false;
+                    }
+                };
+
+                eventSource.onerror = () => {
+                    eventSource.close();
+                    progressText.textContent = 'Error en la conexión';
+                    form.querySelector('button').disabled = false;
+                };
+            } catch (error) {
+                console.error('Error:', error);
+                progressText.textContent = 'Error: ' + error.message;
+                form.querySelector('button').disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

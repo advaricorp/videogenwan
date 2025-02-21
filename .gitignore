@@ -1,7 +1,7 @@
 venv/
 __pycache__/
 *.pyc
-*.jpg
-*.mp4
+output/
+temp_files/
+process.log
 .env
-

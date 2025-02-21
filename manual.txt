@@ -1,0 +1,24 @@
+Manual de Ejecución del Generador de Videos
+1. Preparación del Entorno
+2. Instalación de Dependencias
+Crear requirements.txt con todas las dependencias necesarias:
+Instalar dependencias:
+3. Configuración de Stable Diffusion
+Iniciar el servicio de Stable Diffusion:
+Esperar a que se descargue el modelo (aproximadamente 5GB)
+4. Ejecutar la Aplicación Principal
+En otra terminal (manteniendo activo el servicio de SD):
+La aplicación estará disponible en:
+URL: http://127.0.0.1:5000
+Debug mode: Activado
+Puerto: 5000
+5. Estructura de Carpetas Necesaria
+6. Notas Importantes
+Asegurarse de tener una GPU NVIDIA (preferiblemente RTX 4090)
+El servicio de Stable Diffusion debe estar corriendo en puerto 8000
+La primera ejecución descargará modelos necesarios (~5GB)
+Se necesita espacio en disco para archivos temporales y output
+Verificar que ffmpeg esté instalado en el sistema
+7. Troubleshooting Común
+Si hay errores de moviepy:
+Si hay errores de CUDA:

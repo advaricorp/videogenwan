@@ -1,11 +1,34 @@
+# Web Frameworks
+flask
 fastapi
 uvicorn
+
+# Deep Learning & AI
 torch
 torchvision
 diffusers
 transformers
-python-dotenv
+huggingface_hub
+accelerate
+safetensors
+
+# Text to Speech
+edge-tts
 gtts
+
+# Video & Image Processing
 moviepy
-requests
 Pillow
+opencv-python
+imageio
+imageio-ffmpeg
+
+# Video Effects & Processing
+decorator
+proglog
+numpy
+tqdm
+
+# File & System Utilities
+python-dotenv
+requests

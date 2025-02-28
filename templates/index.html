@@ -55,6 +55,52 @@
                             placeholder="Escribe el texto para tu video..."></textarea>
                     </div>
 
+                    <!-- Background Type Selection -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300">Tipo de Fondo</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <input type="radio" id="bg-image" name="background_type" value="image" checked class="hidden peer">
+                                <label for="bg-image" class="block w-full p-4 text-center bg-gray-700 border border-gray-600 rounded-lg cursor-pointer peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:bg-gray-600">
+                                    Imágenes Estáticas
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" id="bg-video" name="background_type" value="video" class="hidden peer">
+                                <label for="bg-video" class="block w-full p-4 text-center bg-gray-700 border border-gray-600 rounded-lg cursor-pointer peer-checked:bg-blue-600 peer-checked:border-blue-500 hover:bg-gray-600">
+                                    Videos Animados
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Settings (Only visible when video background is selected) -->
+                    <div id="video-settings" class="hidden space-y-4 p-4 bg-gray-700/30 rounded-lg border border-gray-600">
+                        <h3 class="font-medium text-blue-400">Configuración de Video</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-300">Modelo Wan2.1</label>
+                                <select name="model_size" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="1.3B">1.3B (Menor calidad, más rápido)</option>
+                                    <option value="14B">14B (Mayor calidad, más lento)</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-300">Resolución</label>
+                                <select name="resolution" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="832*480">480p (Mejor para modelo 1.3B)</option>
+                                    <option value="1280*720">720p (Mejor para modelo 14B)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <p class="text-xs text-gray-400 mt-2">
+                            Nota: La generación de videos puede tomar varios minutos dependiendo del modelo y la GPU.
+                            El modelo 14B requiere más VRAM pero produce resultados de mayor calidad.
+                        </p>
+                    </div>
+
                     <!-- Master Prompt -->
                     <div class="space-y-2">
                         <label class="text-sm font-medium text-gray-300">Master Prompt</label>
@@ -79,7 +125,25 @@
                         </div>
                     </div>
 
-                    <!-- Voice and Effects -->
+                    <!-- Negative Prompts and Transitions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Prompt Negativo</label>
+                            <textarea 
+                                name="negative_prompt" 
+                                class="w-full h-20 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-100 placeholder-gray-400"
+                                placeholder="Prompt negativo para la generación de imágenes..."></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300">Transición</label>
+                            <select name="transition" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="fade">Fade</option>
+                                <option value="none">Sin transición</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Voice and Effect -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-300">Voz</label>
@@ -136,24 +200,6 @@
                         </div>
                     </div>
 
-                    <!-- Negative Prompts and Transitions -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-300">Prompt Negativo</label>
-                            <textarea 
-                                name="negative_prompt" 
-                                class="w-full h-20 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-100 placeholder-gray-400"
-                                placeholder="Prompt negativo para la generación de imágenes..."></textarea>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-300">Transición</label>
-                            <select name="transition" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                <option value="fade">Fade</option>
-                                <option value="none">Sin transición</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <!-- Generate Button -->
                     <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300">
                         Generar Video
@@ -168,71 +214,83 @@
                     <p id="progress-text" class="text-center text-sm text-gray-400"></p>
                 </div>
 
-                <!-- Video Player -->
-                <div id="video-container" class="hidden space-y-4">
-                    <div class="relative rounded-lg overflow-hidden bg-gray-700">
-                        <video id="video-player" controls class="w-full">
-                            <source src="" type="video/mp4">
-                        </video>
+                <!-- Video Preview -->
+                <div id="video-container" class="hidden mt-8">
+                    <h2 class="text-xl font-semibold mb-4">Vista Previa del Video</h2>
+                    <div class="relative pt-[56.25%] bg-black rounded-lg overflow-hidden">
+                        <video id="video-preview" class="absolute top-0 left-0 w-full h-full" controls></video>
                     </div>
-                    <a id="download-button" href="/download" class="block w-full text-center py-2 px-4 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors duration-300">
-                        Descargar Video
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('generateForm');
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const videoContainer = document.getElementById('video-container');
-        const videoPlayer = document.getElementById('video-player');
-        const downloadButton = document.getElementById('download-button');
-
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            form.querySelector('button').disabled = true;
-            progressContainer.classList.remove('hidden');
-            videoContainer.classList.add('hidden');
-            progressBar.style.width = '0%';
-            progressText.textContent = 'Iniciando...';
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('generateForm');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const videoContainer = document.getElementById('video-container');
+            const videoPreview = document.getElementById('video-preview');
             
-            const formData = new FormData(form);
+            // Add radio button event listeners for background type
+            const bgImageRadio = document.getElementById('bg-image');
+            const bgVideoRadio = document.getElementById('bg-video');
+            const videoSettings = document.getElementById('video-settings');
             
-            try {
-                const response = await fetch('/generate', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const eventSource = new EventSource('/progress');
-                eventSource.onmessage = (event) => {
-                    const data = JSON.parse(event.data);
-                    progressBar.style.width = `${data.progress}%`;
-                    progressText.textContent = data.message;
+            bgImageRadio.addEventListener('change', function() {
+                videoSettings.classList.add('hidden');
+            });
+            
+            bgVideoRadio.addEventListener('change', function() {
+                videoSettings.classList.remove('hidden');
+            });
+            
+            // Rest of the JavaScript
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                
+                progressContainer.classList.remove('hidden');
+                videoContainer.classList.add('hidden');
+                progressBar.style.width = '0%';
+                progressText.textContent = 'Iniciando proceso...';
+                
+                try {
+                    const response = await fetch('/generate', {
+                        method: 'POST',
+                        body: formData
+                    });
                     
-                    if (data.progress >= 100) {
-                        eventSource.close();
-                        videoContainer.classList.remove('hidden');
-                        videoPlayer.src = `/video?t=${Date.now()}`;
-                        form.querySelector('button').disabled = false;
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Start polling for progress
+                        const eventSource = new EventSource('/progress');
+                        
+                        eventSource.onmessage = function(event) {
+                            const data = JSON.parse(event.data);
+                            progressBar.style.width = data.progress + '%';
+                            progressText.textContent = data.message;
+                            
+                            if (data.progress >= 100) {
+                                eventSource.close();
+                                
+                                // Show video preview
+                                videoContainer.classList.remove('hidden');
+                                videoPreview.src = '/video?' + new Date().getTime();
+                            }
+                        };
+                    } else {
+                        progressText.textContent = 'Error: ' + result.error;
                     }
-                };
-
-                eventSource.onerror = () => {
-                    eventSource.close();
-                    progressText.textContent = 'Error en la conexión';
-                    form.querySelector('button').disabled = false;
-                };
-            } catch (error) {
-                console.error('Error:', error);
-                progressText.textContent = 'Error: ' + error.message;
-                form.querySelector('button').disabled = false;
-            }
-        };
+                } catch (error) {
+                    progressText.textContent = 'Error: ' + error.message;
+                }
+            });
+        });
     </script>
 </body>
 </html>

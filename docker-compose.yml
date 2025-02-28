@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  videogen:
+    build: .
+    image: videogen:latest
+    container_name: videogen
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./output:/app/output
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:512
+      - DOWNLOAD_MODELS=true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu] 

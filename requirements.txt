@@ -4,13 +4,14 @@ fastapi
 uvicorn
 
 # Deep Learning & AI
-torch
+torch>=2.4.0
 torchvision
 diffusers
 transformers
 huggingface_hub
-accelerate
+accelerate>=0.27.1
 safetensors
+xfuser>=0.4.1
 
 # Text to Speech
 edge-tts
@@ -32,3 +33,21 @@ tqdm
 # File & System Utilities
 python-dotenv
 requests
+
+# Wan2.1 Dependencies
+huggingface_hub[cli]
+einops
+scipy
+easydict
+omegaconf
+ftfy
+regex
+timm
+decord
+kornia
+open-clip-torch
+modelscope==1.9.5
+# dashscope  # Optional, used for prompt expansion
+
+# Memory optimization utilities
+bitsandbytes>=0.43.0

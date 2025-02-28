@@ -1,0 +1,30 @@
+# Exclude large directories
+models/
+output/
+temp_files/
+venv/
+
+# Exclude git directory
+.git/
+
+# Exclude common large file types
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+
+# Exclude logs
+*.log
+
+# Exclude cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/ 

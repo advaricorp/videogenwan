@@ -13,6 +13,7 @@ from moviepy.editor import (
     TextClip, ImageClip, AudioFileClip, CompositeVideoClip, concatenate_videoclips, VideoFileClip, vfx
 )
 import random
+from wan_t2v import batch_generate_videos
 
 # Configuración de logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -22,6 +23,7 @@ OUTPUT_DIR = "output"
 TEMP_DIR = "temp_files"
 AUDIO_DIR = os.path.join(OUTPUT_DIR, "audio")
 IMAGE_DIR = os.path.join(OUTPUT_DIR, "images")
+VIDEO_DIR = os.path.join(OUTPUT_DIR, "videos")
 OUTPUT_VIDEO_PATH = os.path.join(OUTPUT_DIR, "final_video.mp4")
 
 # Configuración de voces disponibles
@@ -69,7 +71,7 @@ SUBTITLE_STYLES = {
 }
 
 # Crear carpetas necesarias
-for directory in [OUTPUT_DIR, TEMP_DIR, AUDIO_DIR, IMAGE_DIR]:
+for directory in [OUTPUT_DIR, TEMP_DIR, AUDIO_DIR, IMAGE_DIR, VIDEO_DIR]:
     os.makedirs(directory, exist_ok=True)
 
 def clean_output_dirs():
@@ -377,6 +379,139 @@ def create_video_with_audio(images, sentences, audio_files, audio_durations, out
     logging.info(f"Video guardado exitosamente: {output_path}")
     return output_path
 
+def generate_videos_with_wan_t2v(prompts, model_size="1.3B", resolution="832*480"):
+    """
+    Genera videos usando el modelo Wan2.1 Text-to-Video.
+    """
+    logging.info("\n=== Generación de Videos con Wan2.1 ===")
+    
+    try:
+        # Usar el módulo wan_t2v para generar los videos
+        video_paths = batch_generate_videos(
+            prompts=prompts,
+            model_size=model_size,
+            resolution=resolution
+        )
+        
+        logging.info(f"Generados {len(video_paths)} videos.")
+        return video_paths
+        
+    except Exception as e:
+        logging.error(f"Error generando videos con Wan2.1: {e}")
+        raise
+
+def create_video_with_audio_and_videos(videos, sentences, audio_files, audio_durations, output_path):
+    """
+    Crea un video utilizando videos de fondo en lugar de imágenes estáticas.
+    """
+    logging.info("Creando el video final con videos generados...")
+    
+    # Verificar si hay videos para procesar
+    if not videos or len(videos) == 0:
+        logging.error("No hay videos disponibles para procesar. Generando video con imágenes de placeholder.")
+        # Crear imágenes de placeholder para cada oración
+        placeholder_images = []
+        for i in range(len(sentences)):
+            # Crear una imagen negra con texto
+            img = Image.new('RGB', (832, 480), color='black')
+            draw = ImageDraw.Draw(img)
+            
+            # Intentar encontrar una fuente disponible en el sistema
+            font = None
+            try:
+                # Lista de posibles fuentes en diferentes sistemas operativos
+                font_paths = [
+                    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",  # Linux
+                    "/usr/share/fonts/TTF/DejaVuSans.ttf",              # Otro Linux
+                    "/Library/Fonts/Arial.ttf",                         # macOS
+                    "C:/Windows/Fonts/arial.ttf"                        # Windows
+                ]
+                
+                for font_path in font_paths:
+                    if os.path.exists(font_path):
+                        font = ImageFont.truetype(font_path, 30)
+                        break
+            except Exception as e:
+                logging.warning(f"No se pudo cargar la fuente: {e}")
+            
+            # Añadir texto a la imagen
+            text = f"No se pudo generar el video para:\n{sentences[i][:100]}..."
+            text_position = (50, 200)
+            
+            # Si no hay fuente disponible, usar el método básico de dibujo
+            draw.text(text_position, text, fill='white', font=font)
+            
+            # Guardar la imagen
+            img_path = os.path.join(IMAGE_DIR, f"placeholder_{i}.png")
+            img.save(img_path)
+            placeholder_images.append(img_path)
+        
+        # Usar el método de imágenes como fallback
+        return create_video_with_audio(
+            placeholder_images, 
+            sentences, 
+            audio_files, 
+            audio_durations, 
+            output_path
+        )
+    
+    video_clips = []
+    
+    for i, (video_path, audio_path, duration) in enumerate(zip(videos, audio_files, audio_durations)):
+        try:
+            # Preparar el texto del subtítulo
+            sentence = sentences[i]
+            wrapped_text = "\n".join(wrap(sentence, width=MAX_CHARS_SUBTITLE))
+            font_size = 40 if len(sentence) < 100 else 30
+
+            # Crear clip de video 
+            video_clip = VideoFileClip(video_path)
+            
+            # Si el video es más largo que el audio, cortarlo
+            if video_clip.duration > duration:
+                video_clip = video_clip.subclip(0, duration)
+            # Si el video es más corto que el audio, hacer loop
+            elif video_clip.duration < duration:
+                repeats = int(duration / video_clip.duration) + 1
+                video_clip = concatenate_videoclips([video_clip] * repeats).subclip(0, duration)
+            
+            # Crear subtítulos con estilo mejorado
+            subtitle = TextClip(
+                wrapped_text, 
+                fontsize=font_size,
+                font='Arial',
+                color='white',
+                stroke_color='black',
+                stroke_width=2,
+                bg_color='rgba(0,0,0,0.5)',
+                size=(1920, None),
+                method='caption'
+            )
+            subtitle = subtitle.set_duration(duration).set_position(('center', 'bottom'))
+
+            # Crear clip de audio
+            audio_clip = AudioFileClip(audio_path).set_duration(duration)
+            
+            # Combinar todo
+            final_clip = CompositeVideoClip([video_clip, subtitle]).set_audio(audio_clip)
+            video_clips.append(final_clip)
+            
+            logging.info(f"Clip [{i+1}] creado con duración: {duration} seg")
+        except Exception as e:
+            logging.error(f"Error creando clip [{i+1}]: {e}")
+
+    final_video = concatenate_videoclips(video_clips, method="compose")
+    final_video.write_videofile(
+        output_path,
+        fps=FPS,
+        codec='libx264',
+        audio_codec='aac',
+        threads=4,
+        preset='medium'
+    )
+    logging.info(f"Video guardado exitosamente: {output_path}")
+    return output_path
+
 async def process_video(
     text, 
     progress_callback=None, 
@@ -384,10 +519,14 @@ async def process_video(
     transition='fade',
     master_prompt=None,
     negative_prompt=None,
-    voice=None
+    voice=None,
+    background_type='image',  # Nueva opción: 'image' o 'video'
+    model_size="1.3B",        # Tamaño del modelo Wan2.1
+    resolution="832*480"      # Resolución para videos
 ):
     """
     Procesa el video con callbacks de progreso y opciones personalizables.
+    Ahora soporta tanto imágenes como videos como fondo.
     """
     try:
         if progress_callback:
@@ -416,24 +555,38 @@ async def process_video(
         if progress_callback:
             progress_callback(30, "Prompts generados")
 
-        # Generar imágenes
-        images = generate_images_with_local_sd(prompts)
-        if progress_callback:
-            progress_callback(60, "Imágenes generadas")
+        # Generar fondos (imágenes o videos según la opción seleccionada)
+        if background_type == 'image':
+            backgrounds = generate_images_with_local_sd(prompts)
+            if progress_callback:
+                progress_callback(60, "Imágenes generadas")
+        else:  # background_type == 'video'
+            backgrounds = generate_videos_with_wan_t2v(prompts, model_size, resolution)
+            if progress_callback:
+                progress_callback(60, "Videos generados")
 
         # Generar audio
         audio_files, audio_durations = await generate_voiceover(sentences, voice or "es-MX-JorgeNeural")
         if progress_callback:
             progress_callback(80, "Audio generado")
 
-        # Crear video final
-        final_video_path = create_video_with_audio(
-            images, 
-            sentences, 
-            audio_files, 
-            audio_durations, 
-            OUTPUT_VIDEO_PATH
-        )
+        # Crear video final según el tipo de fondo
+        if background_type == 'image':
+            final_video_path = create_video_with_audio(
+                backgrounds, 
+                sentences, 
+                audio_files, 
+                audio_durations, 
+                OUTPUT_VIDEO_PATH
+            )
+        else:  # background_type == 'video'
+            final_video_path = create_video_with_audio_and_videos(
+                backgrounds, 
+                sentences, 
+                audio_files, 
+                audio_durations, 
+                OUTPUT_VIDEO_PATH
+            )
         
         if progress_callback:
             progress_callback(100, "Video completado")

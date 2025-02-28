@@ -54,4 +54,7 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
-EOF
+
+# Add .env to .gitignore
+echo ".env" >> .gitignore
+EOF.env

@@ -1,6 +1,4 @@
-Aquí tienes el README editado y traducido en **inglés**, **español latino** y **francés**.
 
----
 
 ## **ENGLISH**
 
@@ -165,7 +163,9 @@ Le système s’adapte à des niches variées telles que **l'aviation**, **la fi
 - **Stable Diffusion (Local GPU)** pour la génération d’images.  
 - **IA Text-to-Speech** pour la narration.  
 - **MoviePy** pour l’édition et assemblage.  
-- **FastAPI** pour l'inférence locale.  
+- **FastAPI** pour l'inférence locale.
+
+By Adrian Vargas using O1
 
 ---
 
